@@ -14,7 +14,7 @@ if (isset($_GET['token']) && isset($_GET['project'])) {
     $token = $db->querySingle("SELECT value FROM config WHERE name='admin_token'");
     if ($_GET['token'] == $token) {
         // verify the project exists
-        $project = $db->prepare("SELECT * FROM projects WHERE id=:id")->bindValue(':id', $_GET['project'], SQLITE3_INTEGER)->execute()->fetchArray();
+        $project = $db->prepare("SELECT * FROM projects WHERE name=:id")->bindValue(':id', $_GET['project'], SQLITE3_INTEGER)->execute()->fetchArray();
         if ($project) {
             // do git pull in the project folder
             $output = shell_exec("cd {$project['location']} && git pull");
