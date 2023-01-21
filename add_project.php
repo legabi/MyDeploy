@@ -25,7 +25,11 @@ if (filter_var($project_github, FILTER_VALIDATE_URL)) {
     // verify the location of the project on the server is valid and exists
     if (is_dir($project_location)) {
         // insert the project
-        $db->prepare("INSERT INTO projects (name, github, location, created_at, updated_at) VALUES (:name, :github, :location, :created_at, :updated_at)")->bindValue(':name', $project_name, SQLITE3_TEXT)->bindValue(':github', $project_github, SQLITE3_TEXT)->bindValue(':location', $project_location, SQLITE3_TEXT)->bindValue(':created_at', date('Y-m-d H:i:s'), SQLITE3_TEXT)->bindValue(':updated_at', date('Y-m-d H:i:s'), SQLITE3_TEXT)->execute();
+        $result = $db->prepare("INSERT INTO projects (name, github, location) VALUES (:name, :github, :location)");
+        $result->bindValue(':name', $project_name, SQLITE3_TEXT);
+        $result->bindValue(':github', $project_github, SQLITE3_TEXT);
+        $result->bindValue(':location', $project_location, SQLITE3_TEXT);
+        $result->execute();
     } else {
         echo "Error: Invalid location of the project on the server.";
     }
