@@ -2,6 +2,8 @@
 
 // Execute this file to install the database 
 
+// sudo apt install phpXX-sqlite3
+
 // generate a token for the admin user
 $token = bin2hex(random_bytes(32));
 
@@ -15,7 +17,9 @@ $db->exec('CREATE TABLE IF NOT EXISTS projects (id INTEGER PRIMARY KEY, name TEX
 $db->exec('CREATE TABLE IF NOT EXISTS config (id INTEGER PRIMARY KEY, name TEXT, value TEXT)');
 
 // insert the admin token
-$db->prepare("INSERT INTO config (name, value) VALUES ('admin_token', :token)")->bindValue(':token', $token, SQLITE3_TEXT)->execute();
+$request = $db->prepare("INSERT INTO config (name, value) VALUES ('admin_token', :token)");
+$request->bindValue(':token', $token, SQLITE3_TEXT);
+$request->execute();
 
 // ask for discord webhook url
 echo "Enter the discord webhook url: ";
@@ -24,7 +28,9 @@ $discord_webhook = trim(fgets(STDIN));
 // verify the discord webhook url is valid
 if (filter_var($discord_webhook, FILTER_VALIDATE_URL)) {
     // insert the discord webhook url
-    $db->prepare("INSERT INTO config (name, value) VALUES ('discord_webhook', :discord_webhook)")->bindValue(':discord_webhook', $discord_webhook, SQLITE3_TEXT)->execute();
+    $request = $db->prepare("INSERT INTO config (name, value) VALUES ('discord_webhook', :discord_webhook)");
+    $request->bindValue(':discord_webhook', $discord_webhook, SQLITE3_TEXT);
+    $request->execute();
 } else {
     echo "Passed";
 }
