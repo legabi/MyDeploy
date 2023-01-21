@@ -75,7 +75,7 @@ if ($discord_webhook) {
     curl_close($discord_webhook_ch);
 
     echo "Project added. The link to add in github is : \n";
-    echo "https://exemple.com/webhook.php?token=YOUR_TOKEN&project=$project_name";
+    echo "https://exemple.com/webhook.php?token=YOUR_TOKEN&project=$project_name \n";
 }
 
 echo "\n";
