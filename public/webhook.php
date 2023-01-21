@@ -2,7 +2,7 @@
 
 // on webhook request by github, do git pull in the project folder
 if (isset($_GET['token']) && isset($_GET['project'])) {
-    $db = new SQLite3('database.sqlite');
+    $db = new SQLite3('../database.sqlite');
 
     // verify tables config and projects exist, else quit
     if (!$db->querySingle("SELECT name FROM sqlite_master WHERE type='table' AND name='config'") || !$db->querySingle("SELECT name FROM sqlite_master WHERE type='table' AND name='projects'")) {
