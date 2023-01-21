@@ -2,6 +2,8 @@
 
 // Execute this file to install the database 
 
+// sudo apt install phpXX-sqlite3
+
 // generate a token for the admin user
 $token = bin2hex(random_bytes(32));
 
