@@ -4,7 +4,7 @@ $db = new SQLite3('database.sqlite');
 
 // verify tables config and projects exist, else quit
 if (!$db->querySingle("SELECT name FROM sqlite_master WHERE type='table' AND name='config'") || !$db->querySingle("SELECT name FROM sqlite_master WHERE type='table' AND name='projects'")) {
-    echo "Tables config and projects do not exist. Please run install.php first.";
+    echo "Tables config and projects do not exist. Please run install.php first. \n";
     exit;
 }
 
@@ -31,7 +31,8 @@ if (filter_var($project_github, FILTER_VALIDATE_URL)) {
         $result->bindValue(':location', $project_location, SQLITE3_TEXT);
         $result->execute();
     } else {
-        echo "Error: Invalid location of the project on the server.";
+        echo "Error: Invalid location of the project on the server.\n";
+        exit;
     }
 } else {
     echo "Error: Invalid github url.";
@@ -73,6 +74,8 @@ if ($discord_webhook) {
     curl_exec($discord_webhook_ch);
     curl_close($discord_webhook_ch);
 
-    echo "Project added. The link to add in github is :";
+    echo "Project added. The link to add in github is : \n";
     echo "https://exemple.com/webhook.php?token=YOUR_TOKEN&project=$project_name";
 }
+
+echo "\n";
